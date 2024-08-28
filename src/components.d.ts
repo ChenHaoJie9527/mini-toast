@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Toast } from "./components/mini-toast-service/index";
+export { Toast } from "./components/mini-toast-service/index";
 export namespace Components {
     interface MiniToast {
         "closeable": boolean;
@@ -15,6 +17,9 @@ export namespace Components {
         "showClose": boolean;
         "type": 'success' | 'error' | 'warning' | 'info';
     }
+    interface MiniToastService {
+        "show": (toast: Toast) => Promise<void>;
+    }
 }
 declare global {
     interface HTMLMiniToastElement extends Components.MiniToast, HTMLStencilElement {
@@ -23,8 +28,15 @@ declare global {
         prototype: HTMLMiniToastElement;
         new (): HTMLMiniToastElement;
     };
+    interface HTMLMiniToastServiceElement extends Components.MiniToastService, HTMLStencilElement {
+    }
+    var HTMLMiniToastServiceElement: {
+        prototype: HTMLMiniToastServiceElement;
+        new (): HTMLMiniToastServiceElement;
+    };
     interface HTMLElementTagNameMap {
         "mini-toast": HTMLMiniToastElement;
+        "mini-toast-service": HTMLMiniToastServiceElement;
     }
 }
 declare namespace LocalJSX {
@@ -37,8 +49,11 @@ declare namespace LocalJSX {
         "showClose"?: boolean;
         "type"?: 'success' | 'error' | 'warning' | 'info';
     }
+    interface MiniToastService {
+    }
     interface IntrinsicElements {
         "mini-toast": MiniToast;
+        "mini-toast-service": MiniToastService;
     }
 }
 export { LocalJSX as JSX };
@@ -46,6 +61,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mini-toast": LocalJSX.MiniToast & JSXBase.HTMLAttributes<HTMLMiniToastElement>;
+            "mini-toast-service": LocalJSX.MiniToastService & JSXBase.HTMLAttributes<HTMLMiniToastServiceElement>;
         }
     }
 }

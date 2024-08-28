@@ -29,24 +29,30 @@ export class MiniToast {
   private timer: number;
 
   // 生命周期：组件加载完成后执行
-  componentDidLoad() {
-    this.setupAutoClose();
-  }
+  // componentDidLoad() {
+  //   this.setupAutoClose();
+  // }
 
   // 设置定时器，自动关闭
-  private setupAutoClose() {
-    this.timer = window.setTimeout(() => {
-      this.isVisible = false;
-      window.setTimeout(() => this.el.remove(), 300);
-    }, this.duration);
-  }
+  // private setupAutoClose() {
+  //   this.timer = window.setTimeout(() => {
+  //     this.isVisible = false;
+  //     window.setTimeout(() => this.el.remove(), 300);
+  //   }, this.duration);
+  // }
 
-  // 生命周期：组件卸载前执行
-  disconnectedCallback() {
-    window.clearTimeout(this.timer);
-  }
+  // // 生命周期：组件卸载前执行
+  // disconnectedCallback() {
+  //   window.clearTimeout(this.timer);
+  // }
 
   render() {
-    return <div class={`toast ${this.type} ${this.isVisible ? 'visible' : 'hidden'}`}>{this.message}</div>;
+    return (
+      <div class={`mini-toast ${this.type}`}>
+        <div class="mini-toast-content">
+          {this.message}
+        </div>
+      </div>
+    );
   }
 }
