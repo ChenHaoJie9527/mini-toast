@@ -7,8 +7,51 @@
 
     <script type="module" src="/build/mini-toast.esm.js"></script>
     <script nomodule src="/build/mini-toast.js"></script>
+    <style>
+      .btn-group {
+        display: flex;
+        gap: 10px;
+        button {
+          padding: 10px 20px;
+          border-radius: 4px;
+          background-color: bisque;
+          font-size: 16px;
+          border: none;
+          outline: auto;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: rgb(173, 168, 163);
+        }
+      }
+    </style>
   </head>
   <body>
-    <mini-toast message="这是一个测试" type="success"></mini-toast>
+    <mini-toast id="mini-toast"></mini-toast>
+    <div class="btn-group">
+      <button id="successBtn">success</button>
+      <button id="errorBtn">error</button>
+      <button id="warningBtn">warning</button>
+      <button id="infoBtn">info</button>
+    </div>
+    <script>
+      const miniToast = document.getElementById('mini-toast');
+      const successBtn = document.getElementById('successBtn');
+      successBtn.addEventListener('click', () => {
+        miniToast.showToast('这是一个测试', 'success');
+      });
+      const errorBtn = document.getElementById('errorBtn');
+      errorBtn.addEventListener('click', () => {
+        miniToast.showToast('这是一个测试', 'error');
+      });
+      const warningBtn = document.getElementById('warningBtn');
+      warningBtn.addEventListener('click', () => {
+        miniToast.showToast('这是一个测试', 'warning');
+      });
+      const infoBtn = document.getElementById('infoBtn');
+      infoBtn.addEventListener('click', () => {
+        miniToast.showToast('这是一个测试', 'info');
+      });
+    </script>
   </body>
 </html>

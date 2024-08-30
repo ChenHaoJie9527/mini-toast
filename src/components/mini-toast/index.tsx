@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Element } from '@stencil/core';
+import { Component, h, Prop, State, Element, Method } from '@stencil/core';
 
 @Component({
   tag: 'mini-toast',
@@ -6,6 +6,9 @@ import { Component, h, Prop, State, Element } from '@stencil/core';
   shadow: true,
 })
 export class MiniToast {
+  @State() toasts: Array<{ message: string; type: string; id: number }> = [];
+  private toastIdCounter: number = 0;
+
   // 组件的根元素
   @Element() el: HTMLElement;
 
@@ -15,43 +18,49 @@ export class MiniToast {
 
   @Prop() duration: number = 3000;
 
-  @Prop() position: 'top' | 'bottom' | 'left' | 'right' = 'top';
-
-  @Prop() icon: string = '';
-
-  @Prop() showClose: boolean = false;
-
-  @Prop() closeable: boolean = false;
-
   @State() isVisible: boolean = false;
 
   // 定时器
   private timer: number;
 
-  // 生命周期：组件加载完成后执行
+  // // 生命周期：组件加载完成后执行
   componentDidLoad() {
-    this.setupAutoClose();
+    console.log('el', this.el);
   }
 
-  // 设置定时器，自动关闭
-  private setupAutoClose() {
-    this.timer = window.setTimeout(() => {
-      this.isVisible = false;
-      window.setTimeout(() => this.el.remove(), 300);
-    }, this.duration);
+  @Method()
+  async showToast(message: string, type: string = this.type) {
+    const container = this.getContainer();
+    if (!container) {
+      console.error('Toast container not found');
+      return;
+    }
+
+    const newToast = { message, type, id: this.toastIdCounter++ };
+    this.toasts = [...this.toasts, newToast];
+
+    // Set up auto-close for this toast
+    // setTimeout(() => {
+    //   this.removeToast(newToast.id);
+    // }, this.duration);
   }
 
-  // 生命周期：组件卸载前执行
-  disconnectedCallback() {
-    window.clearTimeout(this.timer);
+  private removeToast(id: number) {
+    this.toasts = this.toasts.filter(toast => toast.id !== id);
+  }
+
+  private getContainer() {
+    return this.el.shadowRoot.querySelector('.mini-toast');
   }
 
   render() {
     return (
-      <div class={`mini-toast ${this.type}`}>
-        <div class="mini-toast-content">
-          {this.message}
-        </div>
+      <div class="mini-toast">
+        {this.toasts.map((toast, index) => (
+          <div key={toast.id + index} class={`toast ${toast.type}`}>
+            {toast.message}
+          </div>
+        ))}
       </div>
     );
   }

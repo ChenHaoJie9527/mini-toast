@@ -1,17 +1,30 @@
 .mini-toast {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  color: #000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-direction: column;
 }
 
-.mini-toast-content {
-  font-size: 14px;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+
+/* .info {
+  background-color: #007bff;
 }
+
+.success {
+  background-color: #28a745;
+}
+
+.warning {
+  background-color: #ffc107;
+}
+
+.error {
+  background-color: #dc2626;
+} */
