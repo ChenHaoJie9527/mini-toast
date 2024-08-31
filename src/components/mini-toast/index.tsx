@@ -58,7 +58,12 @@ export class MiniToast {
       <div class="mini-toast">
         {this.toasts.map((toast, index) => (
           <div key={toast.id + index} class={`toast ${toast.type}`}>
-            {toast.message}
+            <div class="icon-wrapper">
+              <div class="icon">✓</div>
+            </div>
+            <div class="content">
+              <div class="message">{toast.message}</div>
+            </div>
           </div>
         ))}
       </div>
